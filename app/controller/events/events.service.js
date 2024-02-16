@@ -33,6 +33,7 @@ export const readAllEvents = async (
     sort = {},
     pageNo = 0,
     limit = 0,
+    select = null
 ) => {
     try {
         const result = await Events.aggregate(paginationPipeLine(pageNo, filter, limit, sort, select))

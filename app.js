@@ -22,8 +22,6 @@ const port = process.env.PORT;
 const NODE_ENV = process.env.NODE_ENV;
 
 app.use(cors());
-app.use("/candidate/multiple", express.json({ limit: '10MB' }))
-app.use("/sanstha/members-multiple", express.json({ limit: '10MB' }))
 app.use(express.json());
 connectDB();
 

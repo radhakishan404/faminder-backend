@@ -7,7 +7,6 @@ var eventsSchema = new mongoose.Schema({
     type: { type: String, enum: ['Work', 'Personal', 'School'], required: true },
     priority: { type: String, enum: ['High', 'Medium', 'Low'], required: true },
     dueDate: { type: Date },
-    reminders: [{ type: Date }],
     completed: { type: Boolean, default: false },
 }, { versionKey: false, timestamps: true });
 

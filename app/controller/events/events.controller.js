@@ -1,9 +1,8 @@
 "use strict";
 
+import mongoose from "mongoose";
 import { responseSend } from "../../helpers/responseSend.js";
-import { calculateAge } from "../../utils/helper.js";
 import { httpCodes } from "../../utils/httpcodes.js";
-import { readUsers } from "../auth/auth.service.js";
 import {
     readEvents, createEvents, readAllEvents, updateEvents, deleteEvents
 } from "./events.service.js";
@@ -25,7 +24,7 @@ export const getEventsList = async (req, res, next) => {
         const { keywords = "", pageNo = 0, limit = 10, sortBy = -1, sortField = "createdAt", type = null, priority = null, dueDate = null } = req.query;
         const { _id } = req.session;
 
-        let filter = { userId: _id };
+        let filter = { userId: mongoose.Types.ObjectId(_id) };
 
         if (keywords && keywords !== "")
             filter = {
@@ -43,7 +42,17 @@ export const getEventsList = async (req, res, next) => {
             filter.priority = priority;
         }
         if (dueDate) {
-            filter.dueDate = dueDate;
+
+            const targetDate = new Date(dueDate);
+            targetDate.setUTCHours(0, 0, 0, 0);
+
+            const nextDay = new Date(targetDate);
+            nextDay.setUTCDate(targetDate.getUTCDate() + 1);
+
+            filter.dueDate = {
+                $gte: targetDate,
+                $lt: nextDay,
+            }
         }
 
         let result = await readAllEvents(
@@ -80,7 +89,7 @@ export const editEvents = async (req, res, next) => {
         }
 
         records = await updateEvents({ _id }, req.body)
-        responseSend(res, httpCodes.OK, "Event updated successfully", records);
+        responseSend(res, httpCodes.OK, "Event updated successfully", req.body);
     } catch (error) {
         next(error);
     }
