@@ -8,6 +8,7 @@ export const insertEventsVal = Joi.object({
     type: Joi.string().required(),
     priority: Joi.string().required(),
     dueDate: Joi.string().required(),
+    time: Joi.string().required(),
     reminders: Joi.array().optional(),
     completed: Joi.string().optional()
 });
@@ -17,7 +18,6 @@ export const getEventsListVal = Joi.object({
     limit: Joi.string().optional(),
     sortBy: Joi.string().optional(),
     sortField: Joi.string().optional(),
-    keywords: Joi.string().optional(),
     type: Joi.string().optional(),
     priority: Joi.string().optional(),
     dueDate: Joi.string().optional(),
@@ -34,6 +34,7 @@ export const editEventsVal = Joi.object({
     type: Joi.string().required(),
     priority: Joi.string().required(),
     dueDate: Joi.string().required(),
+    time: Joi.string().required(),
     reminders: Joi.array().optional(),
     completed: Joi.string().optional()
 });
