@@ -52,12 +52,3 @@ export const createEvents = async (insertData) => {
         throw new Error(error);
     }
 }
-
-export const bulkEventsCreate = async (data) => {
-    try {
-        const result = await Events.insertMany(data);
-        return result;
-    } catch (error) {
-        throw new Error(error);
-    }
-}

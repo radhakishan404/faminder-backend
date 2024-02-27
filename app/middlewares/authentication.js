@@ -28,18 +28,5 @@ const authenticateUser = async (req, res, next) => {
     }
 };
 
-const getAuthUser = async (req, res, next) => {
-    try {
-        let access_token = req.header("Authorization");
-        access_token = access_token.split(" ")[1]
 
-        req.session = jwt.verify(access_token, JWT_SECRET);
-
-        next();
-    } catch (e) {
-        next();
-    }
-};
-
-
-export { authenticateUser, getAuthUser };
+export { authenticateUser };
